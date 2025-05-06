@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'sun_progressbar_arcsize_removespace.dart';
 
 class SunSection extends StatefulWidget {
-  // var sunRise;
-  //
-  // String sunRiseHour;
-  // String sunRiseMinute;
 
-  SunSection( {super.key});
+  const SunSection( {super.key});
 
   @override
   State<SunSection> createState() => _SunSectionState();

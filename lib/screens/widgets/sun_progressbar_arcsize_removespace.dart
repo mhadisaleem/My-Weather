@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import '../../controllers/weather_controller.dart';
 
 class SunProgressbarArcsizeRemovespace extends StatefulWidget {
+  const SunProgressbarArcsizeRemovespace({super.key});
+
   @override
-  _SunProgressbarArcsizeRemovespaceState createState() =>
-      _SunProgressbarArcsizeRemovespaceState();
+  SunProgressbarArcsizeRemovespaceState createState() =>
+      SunProgressbarArcsizeRemovespaceState();
 }
 
-class _SunProgressbarArcsizeRemovespaceState
+class SunProgressbarArcsizeRemovespaceState
     extends State<SunProgressbarArcsizeRemovespace> {
   final WeatherController weatherController = Get.find();
   late Timer _timer;
@@ -38,8 +40,8 @@ class _SunProgressbarArcsizeRemovespaceState
           weatherController.weatherDaysModel.value.sunSet.isNotEmpty) {
         List<String> sunRiseList =
         weatherController.weatherDaysModel.value.sunRise.split(':');
-        print(" minute of sunRise" +int.parse(sunRiseList[1]).toString());
-        print(" Hour of sunRise" +int.parse(sunRiseList[0]).toString());
+        // print(" minute of sunRise" +int.parse(sunRiseList[1]).toString());//cIcd
+        // print(" Hour of sunRise" +int.parse(sunRiseList[0]).toString());//cIcd
         List<String> sunSetList =
         weatherController.weatherDaysModel.value.sunSet.split(':');
 
@@ -54,7 +56,7 @@ class _SunProgressbarArcsizeRemovespaceState
         );
       }
     } catch (e) {
-      print("Error parsing sunrise or sunset: $e");
+      //print("Error parsing sunrise or sunset: $e");//cIcd
     }
 
     // Calculate total minutes from sunrise to sunset
@@ -132,11 +134,11 @@ class _ArcPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     // Arc Paint: For the moving progress arc
-    Paint arcPaint = Paint()
-      ..color = Colors.yellow
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+    // Paint arcPaint = Paint()
+    //   ..color = Colors.yellow
+    //   ..strokeWidth = 2
+    //   ..style = PaintingStyle.stroke
+    //   ..strokeCap = StrokeCap.round;
 
     // Sun Paint: For the moving sun
     Paint sunPaint = Paint()

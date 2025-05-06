@@ -37,6 +37,8 @@ class WeatherDaysModel extends HiveObject{
   late final List<ListHour> hourList;
   @HiveField(14)
   late final List<ListDay> daysList;
+  @HiveField(15)
+  late final String cityName;
 
   WeatherDaysModel(
       {required this.aveTemp,
@@ -53,131 +55,61 @@ class WeatherDaysModel extends HiveObject{
         required this.sunRise,
         required this.sunSet,
         required this.hourList,
-        required this.daysList});
+        required this.daysList,
+        required this.cityName});
 
-  factory WeatherDaysModel.fromJson(Map<String, dynamic> json) {
+  factory WeatherDaysModel.fromJson(Map<String, dynamic> json, String cName) {
     List<dynamic> myDay = json["days"];
     List<Map<String, dynamic>> sevenDaysList = [];
-    print("object");
-    print("Days length" + myDay.length.toString());
+    // print("object");//cIcd
+    // print("Days length" + myDay.length.toString());//cIcd
     List<dynamic> myHours = [];
     for (int dayIndex = 0; dayIndex < 7; dayIndex++) {
       sevenDaysList.add(myDay[dayIndex]);
-      ////// print(myDay[dayIndex]); // ok printing exect Seven days
-      //print(sevenDaysList); // ok printing exect Seven days
-      print("seven days length is " + sevenDaysList.length.toString());
-      //log(sevenDaysList[dayIndex]["datetime"].toString());
-      //print(sevenDaysList[dayIndex]["datetime"].toString());
-      try {
-        // DateTime sevenDays = DateTime.parse(sevenDaysList['datetime'].toString());
-        // String sevenDay = DateFormat('EEEE,MMMd').format(sevenDays);
-        // print(sevenDay);
-        // seven days mai sy sirf 2 days liay, first current hour sy 23 hour tk
-        // if hour list.length == 24, else go to day+1(also check both days date and data weather it is
-        // same or not)
-
-        // declare a list, then intialise in loop, then use this list in another list
-        //will produce error
-        // "The non-nullable local variable 'sevenDaysList' must be assigned before it can be used."
-        // sevenDaysList
-      } catch (e) {
-        print(e);
-        print("Error is");
-      }
+      //print("seven days length is " + sevenDaysList.length.toString());//cIcd
     }
-    print("final list length is " + sevenDaysList.length.toString());
+    //print("final list length is " + sevenDaysList.length.toString());//cIcd
     for (int dayIndex = 0; dayIndex < 2; dayIndex++) {
       myHours
           .addAll(sevenDaysList[dayIndex]['hours']); //myDay[dayIndex]["hours"]
-      //print( sevenDaysList['datetime']);
-      ///// print(myHours);
-      print("myHours length.. " + myHours.length.toString());
+      //print("myHours length.. " + myHours.length.toString());//cIcd
       //print(myDay[1]); ok working
       //print(myDay[dayIndex]["hours"]);ok giving today's hours and tomorrows hours list
 
       for (int hourIndex = 0; hourIndex < myHours.length; hourIndex++) {
         //print(myDay[dayIndex]);//
         // print("days index "+dayIndex.toString());  // ok days index 0 & days index 1 for 24 time each
-        double strTemp = myHours[hourIndex]["temp"];
-        String strTime = myHours[hourIndex]["datetime"];
+        //double strTemp = myHours[hourIndex]["temp"];//cIcd value is not being used
+        //String strTime = myHours[hourIndex]["datetime"];//cIcd
         //print(strTemp);
-        print("formated date is " + strTime);
+       // print("formated date is " + strTime);//cIcd
       }
-      //////           DateTime dateTime = DateFormat.Hms().parse(strTime); // log("Hms is "+dateTime.toString()); //Hms is 1970-01-01 21:00:00.000
-      // String time12 = DateFormat.Hms().format(dateTime);
-      ///////           DateTime now;
-      ////////          if(hourIndex==24){
-      ///////          now = DateTime.now().add(Duration(days: 1));}
-      ///////           else{
-      ///////             now = DateTime.now();
-      ///////           }
-      ////////           DateTime fullDateTime = DateTime(
-      ///////             now.year,
-      ///////             now.month,
-      ///////             now.day,
-      ///////             dateTime.hour,
-      //////             dateTime.minute,
-      //////             dateTime.second,
-      //////           );
-      //////           DateTime newDate = DateTime(
-      //////             now.year,
-      ////////             now.month,
-      ///////             now.day,
-      ////////             now.hour,
-      ///////             now.minute,
-      ///////             now.second,
-      //////          );
-      ///////  print("full date  is  "+fullDateTime.toString());
-      //String newDate = DateFormat.jm().format(DateTime.now());
-      //print("newDate  is  "+newDate);
-      // DateTime dateTime1 = DateFormat.jm().parse(newDate);
-      // DateTime dateTime2 = DateFormat.jm().parse(time12); //format.parse(newDate);// 10
-
-      ///// if (fullDateTime==newDate) {
-      // print("yes");
-      // print(dateTime2);
-      // log("New Date is " + newDate.toString());
-      // log(time12.toString());
-      ////// }
-      //
-      // DateTime sevenDays = DateTime.parse(myDay[0]['datetime']);
-      // String sevenDay = DateFormat('EEEE,MMMd').format(sevenDays);
-      // print("This is the 7 days date   $sevenDay");
     }
-    // print("myHours length "+myHours.length.toString());
-    // for(int hourIndex=0;hourIndex<myHours.length;hourIndex++){
-    //   //print(myDay[dayIndex]);//
-    //   // print("days index "+dayIndex.toString());  // ok days index 0 & days index 1 for 24 time each
-    //   double strTemp = myHours[hourIndex]["temp"];
-    //   String strTime = myHours[hourIndex]["datetime"];
-    //   print(strTemp);
-    //   print(strTime);
-    // }
     String formattedTime = DateFormat("ha").format(DateTime.now()); //.jm()
-    print("DateTime.now is " + formattedTime);
+    //print("DateTime.now is " + formattedTime);//cIcd
     int currentHourIndex = -1;
     for (int myHourIndex = 0; myHourIndex < myHours.length; myHourIndex++) {
-      String myhour = myHours[myHourIndex]["datetime"];
-      DateTime time = DateFormat("HH:mm:ss").parse(myhour); //Hms()
+      String myHour = myHours[myHourIndex]["datetime"];
+      DateTime time = DateFormat("HH:mm:ss").parse(myHour); //Hms()
       String formatTime = DateFormat("ha").format(time); //"h:mma"
-      print("datetime from list " + formatTime);
+      //print("datetime from list " + formatTime);//cIcd
       if (formatTime == formattedTime) {
-        print("hours from myhours " + myhour);
+        //print("hours from myhours " + myHour);//cIcd
         currentHourIndex = myHourIndex;
         break;
       }
     }
     if (currentHourIndex != -1) {
       myHours = myHours.sublist(currentHourIndex); // Keep only elements from the current hour onward
-      print("Filtered myHours: $myHours");
+      //print("Filtered myHours: $myHours");//cIcd
     }
 
     List<ListHour> hours;
-    print("myHours length for fromjson" + myHours.length.toString());
+   // print("myHours length for fromjson" + myHours.length.toString());//cIcd
     hours = myHours.map((hourJson) {
-      print("sun Rise in weather days model "+ sevenDaysList[0]["sunrise"]);
-      print("sun Set in weather days model"+ sevenDaysList[0]["sunset"]);
-      print("weather icon is "+hourJson["icon"]);
+      // print("sun Rise in weather days model "+ sevenDaysList[0]["sunrise"]);//cIcd
+      // print("sun Set in weather days model"+ sevenDaysList[0]["sunset"]);//cIcd
+      // print("weather icon is "+hourJson["icon"]);//cIcd
       // print(hourJson['datetime']);
       return ListHour.fromJson(hourJson);
     }).toList();
@@ -201,7 +133,8 @@ class WeatherDaysModel extends HiveObject{
         sunRise: sevenDaysList[0]['sunrise'], //'0',
         sunSet: sevenDaysList[0]["sunset"], //'0',
         hourList: hours,
-        daysList: sevenDay //[]
+        daysList: sevenDay, //[]
+        cityName: cName,
     );
   }
 }

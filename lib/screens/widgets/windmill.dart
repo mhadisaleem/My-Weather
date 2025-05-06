@@ -3,11 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class WindmillScreenPoleGround extends StatefulWidget {
+  const WindmillScreenPoleGround({super.key});
+
   @override
-  _WindmillScreenState createState() => _WindmillScreenState();
+  WindmillScreenState createState() => WindmillScreenState();
 }
 
-class _WindmillScreenState extends State<WindmillScreenPoleGround>
+class WindmillScreenState extends State<WindmillScreenPoleGround>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -43,6 +45,8 @@ class _WindmillScreenState extends State<WindmillScreenPoleGround>
 }
 
 class WindmillBody extends StatelessWidget {
+  const WindmillBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -94,7 +98,7 @@ class WindmillBodyPainter extends CustomPainter {
 class WindmillBlades extends StatelessWidget {
   final AnimationController controller;
 
-  WindmillBlades({required this.controller});
+  const WindmillBlades({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

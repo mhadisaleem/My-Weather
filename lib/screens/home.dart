@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 
 import '../constants/padding.dart';
 import '../controllers/weather_controller.dart';
-import '../data/forecast_data.dart';
 import 'widgets/degree_widget.dart';
 import 'widgets/humidity_section.dart';
 import 'widgets/sun_section.dart';
@@ -26,88 +25,8 @@ class _HomeState extends State<Home> {
   late String minTemp = "28";
   late String lastUpdate = "Updated at 2.00pm";
   String developerName = "M Farhan Saleem";
-  // getWeatherData(String query) async {
-  //   var url = Uri.parse(
-  //       "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/faisalabad?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=YJSBHLD6KPJQAT4ULZWZGHJQB&contentType=json");
-  //   Response response = await get(url);
-  //   var data = jsonDecode(response.body);
-  //   List<dynamic> myDay = data["days"];
-  //   log("Total days  " + myDay.length.toString());
-  //
-  //   //for(int dayIndex=0;dayIndex<myDay.length;dayIndex++) {
-  //
-  //   print("Average Temprature is  "+myDay[0]['temp'].toString());
-  //   print("Condition is  "+myDay[0]["conditions"].toString());
-  //   print("Average Temprature Max is  "+myDay[0]['tempmax'].toString());
-  //   print("Average Temprature is  "+myDay[0]['temp'].toString());
-  //   print("Average Temprature is  "+myDay[0]['temp'].toString());
-  //
-  //   List<dynamic> hours = myDay[0]["hours"];
-  //   // log("Day " + dayIndex.toString());
-  //   for (int hourIndex = 0; hourIndex < hours.length; hourIndex++) {
-  //     String strTime = hours[hourIndex]['datetime'];
-  //     DateTime dateTime = DateFormat.Hms().parse(strTime);
-  //     // log("Hms is "+dateTime.toString()); //Hms is 1970-01-01 21:00:00.000
-  //     String time12 = DateFormat.jm().format(dateTime);
-  //     print("time12 is  "+time12);
-  //     String newDate = DateFormat.jm().format(DateTime.now());
-  //     print("newDate  is  "+newDate);
-  //    // String weekDay = DateFormat('E,MMMd').format(DateTime.now());
-  //    // try{
-  //       DateTime sevenDays = DateTime.parse(myDay[0]['datetime']);
-  //     String sevenDay = DateFormat('EEEE,MMMd').format(sevenDays);
-  //    // }
-  //     //catch(e){
-  //       print("This is the 7 days date   $sevenDay");
-  //     //   print(e);
-  //     // }
-  //
-  //
-  //
-  //     // DateFormat format = DateFormat.jm(); // Format for "8:00 AM" type strings
-  //
-  //     DateTime dateTime1 = DateFormat.jm().parse(newDate);
-  //     DateTime dateTime2 =
-  //         DateFormat.jm().parse(time12); //format.parse(newDate);// 10
-  //     // print("yes");
-  //     // print("yes");
-  //     if (dateTime1.hour == dateTime2.hour) {
-  //       print("yes");
-  //       log("New Date is " + newDate.toString());
-  //       log(time12.toString());
-  //     }
-  // if(time12==newDate){
-  //}
-  // print(time12);
 
-  //log(hours.length.toString());
-  //}
-  //}
-
-  // for(int i=0;i<=myDay.length;i++){
-  // List<dynamic> hours = myDay[i]["hours"];
-  // log("Start of Days and Hour".toString());
-  // log(myDay[i].toString());
-  // log("      ".toString());
-  // log("      ".toString());
-  // log(hours.toString());
-  // log("End of Index".toString());
-  // log("      ".toString());
-  // log("      ".toString());
-  // DateTime dateTimeWithTimeZone = DateTime.parse("00");
-  //   print(DateFormat('H').format(dateTimeWithTimeZone));
-
-  //print(new DateFormat.jm().format(DateTime.parse("00:00:00")));
-  //}
-  // DateTime dateTime = DateFormat.Hms().parse(strTime);
-  // String time12 = DateFormat.jm().format(dateTime);
-  // print(time12);                                         // Map finalHour =  hours[5];
-  // log(finalHour.toString());
-  // }
   WeatherController weatherController = Get.put(WeatherController());
-  final data = ForecastData();
-  // List<ForecastModel> data = ForecastData().forecastDataList;
-  //  late ForecastData forecastData;
 
   @override
   void initState() {
@@ -119,16 +38,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // String sunRise = weatherController.weatherDaysModel.value.sunRise;
-    // String sunSet = weatherController.weatherDaysModel.value.sunSet;
-    // List<String> sunRiseList = sunRise.split(':');
-    // int sunRiseHour = int.parse(sunRiseList[0]);
-    // int sunRiseMinute = int.parse(sunRiseList[1]);
-    // print(sunRiseList.length.toString());
-    // print("Hours for sun is "+int.parse(sunRiseList[0]).toString());
-    // print("minute for sun is "+sunRiseMinute.toString());
-    print(MediaQuery.of(context).size.width);
-    print(MediaQuery.of(context).size.height);
+
     return Stack(
       children: [
         Image.asset(
@@ -145,10 +55,10 @@ class _HomeState extends State<Home> {
               color: Colors.white,
             ),
             title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                cityName,
+    Obx(() =>Text(
+                weatherController.fLocation.value,
                 style: const TextStyle(color: Colors.white),
-              ),
+              ),),
               const Icon(
                 Icons.location_on_outlined,
                 color: Colors.white,
@@ -166,16 +76,13 @@ class _HomeState extends State<Home> {
           ),
           backgroundColor: Colors.black26,
           body: Padding(
-            padding: konlyPaddingLR,
+            padding: kOnlyPaddingLR,
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(height: 50),
                   Column(
                     children: [
-                      // Text("data,\u00B0",style: TextStyle(fontSize: 20)),
-                      // Text("data"),Text("data"),
-
                       Obx(() => DegreeWidget(
                           temp: weatherController.weatherDaysModel.value.aveTemp.toInt()
                               .toString(), //temp,
@@ -236,7 +143,7 @@ class _HomeState extends State<Home> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Container(
+                  SizedBox(
                       height: MediaQuery.of(context).size.height < 600
                           ? MediaQuery.of(context).size.height * .34
                           : MediaQuery.of(context).size.height *
@@ -298,7 +205,7 @@ class _HomeState extends State<Home> {
                               //);
                             }),
                       )),
-                  Kdivider,
+                  kDivider,
                   SizedBox(
                     height: MediaQuery.of(context).size.height < 600
                         ? MediaQuery.of(context).size.height * .85
@@ -371,7 +278,7 @@ class _HomeState extends State<Home> {
                                     ],
                                   ),
                                 ),
-                                Kdivider,
+                                kDivider,
                               ],
                             );
                             //);
@@ -384,17 +291,17 @@ class _HomeState extends State<Home> {
                         .humidity,feelsLike:  weatherController.weatherDaysModel.value
                       .feelsLike,uvIndex: weatherController.weatherDaysModel.value
                       .uvIndex,)), //Container(width:200,height:150,child: Progressbar(),),
-                  Kdivider,
+                  kDivider,
                   const SizedBox(height: 10),
                   Obx(()=>WindSection(airSpeed: weatherController.weatherDaysModel.value.windSp,airDirection:  weatherController.weatherDaysModel.value
                       .windDir)), //Container(width: 200,height: 150,child: WindSection(),),
-                  Kdivider,
+                  kDivider,
                   // Container(width: 200,height: 150,
                   //     color: Colors.transparent,
                   // child:SunProgressBarRays()),
                   const SizedBox(height: 10),
                   SunSection(),//sunRiseHour: 7,sunRiseMinute: 30,
-                  Kdivider,
+                  kDivider,
                   const Padding(
                     padding: EdgeInsets.only(left:20.0,right:20),
                     child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -438,7 +345,7 @@ class _HomeState extends State<Home> {
     "partly-cloudy-night": Colors.black,//Colors.indigo,
   };
   Icon getWeatherIcon(String iconString) {
-    print("Weather icon string is "+iconString);
+    //print("Weather icon string is "+iconString);//cicd
     return Icon(
       weatherIcons[iconString] ?? Icons.error, // Default to an error icon if no match
       size: 25.0,
@@ -453,24 +360,9 @@ class _HomeState extends State<Home> {
   }
 
   String daysDateTImeFormat(String dateTime) {
-    print("sun inn home "+"${weatherController.weatherDaysModel.value.sunRise}");
+   // print("sun inn home "+"${weatherController.weatherDaysModel.value.sunRise}");//cicd
     DateTime sevenDays = DateTime.parse(dateTime);
     String sevenDay = DateFormat('EEE,MMMd').format(sevenDays);
     return sevenDay;
   }
 }
-
-//List Hour = Day["hours"];
-//List hour = data["hours"];
-//Map mhour = myDay["hours"];
-//List<dynamic> mhour = data['hours'];
-//List<dynamic> mhour = data["days"]['hours'];
-//log(myDay[37]['hours'][0].toString());
-
-// for (var day in data) {
-//   print('Date: ${day['datetime']}');
-//   List<dynamic> hours = day['hours'];
-//   for (var hour in hours) {
-//     print('  Time: ${hour['datetime']}, Temperature: ${hour['temp']}');
-//   }
-//

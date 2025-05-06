@@ -32,13 +32,14 @@ class WeatherDaysModelAdapter extends TypeAdapter<WeatherDaysModel> {
       sunSet: fields[12] as String,
       hourList: (fields[13] as List).cast<ListHour>(),
       daysList: (fields[14] as List).cast<ListDay>(),
+      cityName: fields[15] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, WeatherDaysModel obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.aveTemp)
       ..writeByte(1)
@@ -68,7 +69,9 @@ class WeatherDaysModelAdapter extends TypeAdapter<WeatherDaysModel> {
       ..writeByte(13)
       ..write(obj.hourList)
       ..writeByte(14)
-      ..write(obj.daysList);
+      ..write(obj.daysList)
+      ..writeByte(15)
+      ..write(obj.cityName);
   }
 
   @override

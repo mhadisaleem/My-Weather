@@ -1,21 +1,22 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
-
+import '../helper/location_helper.dart';
 import '../model/weather_days_model.dart';
 
 class WeatherController extends GetxController
 
 {
+  var fLocation = "".obs;
   var weatherDaysModel = WeatherDaysModel(
       aveTemp: 0,
       condition: 'Not Accessed',
       minTemp: 0,
       maxTemp: 0,
       dayTime: '0',
-      icons: 'clear_day',//Icon(Icons.icecream_outlined),
+      icons: 'clear_day',//Icon(Icons.iCecream_outlined),
       feelsLike: 0.0,
       hourList: [],
       humidity: 0,
@@ -24,7 +25,8 @@ class WeatherController extends GetxController
       uvIndex: 0,
       windDir: 0,
       windSp: 0,
-      daysList: []
+      daysList: [],
+      cityName: ""
   ).obs;
   var box = Hive.box<WeatherDaysModel>('WeatherBox');
   void saveWeatherData(WeatherDaysModel weatherData) async {
@@ -32,8 +34,8 @@ class WeatherController extends GetxController
     try{await box.put('weatherData', weatherData);
     }
     catch(e){
-      print("Error in put hive");
-      print(e);
+      // print("Error in put hive");//cicd
+      // print(e);
     }
 
   }
@@ -41,7 +43,8 @@ class WeatherController extends GetxController
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    fetchData();
+    getWeatherByLocation();
+
   }
   void loadWeatherData() {
    // var box = Hive.box('weatherBox');
@@ -51,25 +54,41 @@ class WeatherController extends GetxController
       weatherDaysModel.value = savedData;
     }}
         catch(e){
-      print(e);
-      print("Hive exception");
+      // print(e);//cicd
+      // print("Hive exception");
         }
 
   }
+  Future<void> getWeatherByLocation() async {
 
-  void fetchData() async{
+    final location = await LocationService().getCurrentLocation();
+    var lat = location.latitude;
+    var lon = location.longitude;
+     //fLocation=getCityFromCoordinates(lat,lon);
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+    if(placemarks.isNotEmpty){
+      //print("Location is "+placemarks[0].locality.toString());//cicd
+      fLocation.value=placemarks[0].locality??"Unknown Location";
+      //weatherDaysModel.value.cityName =fLocation.value;
+    }
+    // print("Location is "+fLocation.toString());
+    fetchData(fLocation);
+
+  }
+
+
+
+  void fetchData(var location) async{
+   // print("Location is"+location);
 
     var url = Uri.parse(
-        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/faisalabad?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=YJSBHLD6KPJQAT4ULZWZGHJQB&contentType=json");
+        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline//$location?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=YJSBHLD6KPJQAT4ULZWZGHJQB&contentType=json");
     var response = await get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      weatherDaysModel.value = WeatherDaysModel.fromJson(data);
+      weatherDaysModel.value = WeatherDaysModel.fromJson(data,fLocation.value);
       saveWeatherData(weatherDaysModel.value);
     } else {
-      //var weatherBox = Hive.box("WeatherBox");
-      // weatherDaysModel.value =box.get('weatherData')!;
-      // print("Hive value is "+ box.get('weatherData').toString());
       throw Exception('Failed to load weather data');
     }
 

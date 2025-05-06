@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:weather_forecast/model/weather_days_model.dart';
-
 import 'screens/home.dart';
 
 void main() async{
@@ -19,7 +17,4 @@ void main() async{
       ));
 }
 
-// Future<void> initServices() async {
-//   Get.put(ConnectivityService()); // Put the ConnectivityService into GetX's dependency management
-//}
 

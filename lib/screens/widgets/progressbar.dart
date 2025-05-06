@@ -3,10 +3,17 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:weather_forecast/controllers/weather_controller.dart';
 
-class Progressbar extends StatelessWidget {
-  Progressbar({super.key,required this.humidity});//
+class Progressbar extends StatefulWidget {
+  const Progressbar({super.key,required this.humidity});//
   final double humidity;
+
+  @override
+  State<Progressbar> createState() => _ProgressbarState();
+}
+
+class _ProgressbarState extends State<Progressbar> {
   WeatherController weatherController= Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.transparent,
