@@ -70,9 +70,10 @@ class WeatherController extends GetxController
       //print("Location is "+placemarks[0].locality.toString());//cicd
       fLocation.value=placemarks[0].locality??"Unknown Location";
       //weatherDaysModel.value.cityName =fLocation.value;
+      print("Location is "+fLocation.toString());
+      fetchData(fLocation);
+
     }
-    // print("Location is "+fLocation.toString());
-    fetchData(fLocation);
 
   }
 
