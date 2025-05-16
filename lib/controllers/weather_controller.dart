@@ -68,10 +68,10 @@ class WeatherController extends GetxController
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
     if(placemarks.isNotEmpty){
       //print("Location is "+placemarks[0].locality.toString());//cicd
-      fLocation.value=placemarks[0].locality??"Unknown Location";
+      fLocation.value=placemarks[0].locality??"Multan";
       //weatherDaysModel.value.cityName =fLocation.value;
       //print("Location is "+fLocation.toString());
-      fetchData(fLocation);
+      fetchData(fLocation.value);
 
     }
 
@@ -83,10 +83,11 @@ class WeatherController extends GetxController
    // print("Location is"+location);
 
     var url = Uri.parse(
-        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline//$location?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=YJSBHLD6KPJQAT4ULZWZGHJQB&contentType=json");
+        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Faisalabad?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=YJSBHLD6KPJQAT4ULZWZGHJQB&contentType=json");
     var response = await get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
+      print(data);
       weatherDaysModel.value = WeatherDaysModel.fromJson(data,fLocation.value);
       saveWeatherData(weatherDaysModel.value);
     } else {
