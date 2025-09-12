@@ -16,7 +16,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
 class _HomeState extends State<Home> {
   late String cityName = "Faisalabad";
   late String temp = "34";
@@ -25,7 +24,6 @@ class _HomeState extends State<Home> {
   late String minTemp = "28";
   late String lastUpdate = "Updated at 2.00pm";
   String developerName = "M Farhan Saleem";
-
   WeatherController weatherController = Get.put(WeatherController());
 
   @override
