@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../constants/padding.dart';
 import '../controllers/weather_controller.dart';
 import 'widgets/degree_widget.dart';
@@ -31,7 +30,6 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     weatherController.loadWeatherData();
-    // getWeatherData("Faisalabad");
   }
 
   @override
@@ -300,10 +298,20 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 10),
                   SunSection(),//sunRiseHour: 7,sunRiseMinute: 30,
                   kDivider,
-                  const Padding(
-                    padding: EdgeInsets.only(left:20.0,right:20),
-                    child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text('06:20AM'),Text('06:15PM')],),//('07:08AM'),Text('05:21PM')
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(()=>Text(
+                         hourDateTimeFormat(weatherController.weatherDaysModel.value.sunRise),
+                        )),
+          Obx(()=>Text(
+                          hourDateTimeFormat(weatherController.weatherDaysModel.value.sunSet),
+
+                        )),
+                      ],
+                    ),
                   ),
 
                   const SizedBox(
@@ -363,4 +371,5 @@ class _HomeState extends State<Home> {
     String sevenDay = DateFormat('EEE,MMMd').format(sevenDays);
     return sevenDay;
   }
+
 }
