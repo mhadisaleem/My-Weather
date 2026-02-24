@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -29,6 +30,7 @@ class WeatherController extends GetxController
       cityName: ""
   ).obs;
   var box = Hive.box<WeatherDaysModel>('WeatherBox');
+  final String apiKey = dotenv.env['API_KEY']!;
   void saveWeatherData(WeatherDaysModel weatherData) async {
     box.clear();
     try{await box.put('weatherData', weatherData);
@@ -37,7 +39,6 @@ class WeatherController extends GetxController
       // print("Error in put hive");//cicd
       // print(e);
     }
-
   }
   @override
   void onInit() {
@@ -83,7 +84,7 @@ class WeatherController extends GetxController
    // print("Location is"+location);
 
     var url = Uri.parse(
-        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/$location?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=YJSBHLD6KPJQAT4ULZWZGHJQB&contentType=json");
+        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/$location?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=$apiKey&contentType=json");
     var response = await get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);

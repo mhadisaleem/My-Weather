@@ -20,6 +20,11 @@ jobs:
         with:
           flutter-version: "3.27.3"  # Match your Flutter version
 
+
+      - name: Create .env file
+        run: |
+          echo "API_KEY=${{ secrets.VISUAL_CROSSING_KEY }}" > .env    
+
       - name: 📦 Install Dependencies
         run: flutter pub get
 
