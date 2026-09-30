@@ -17,7 +17,7 @@ class WeatherController extends GetxController
       minTemp: 0,
       maxTemp: 0,
       dayTime: '0',
-      icons: 'clear_day',//Icon(Icons.iCecream_outlined),
+      icons: 'clear_day',//Icon(Icons.IceCream_outlined),
       feelsLike: 0.0,
       hourList: [],
       humidity: 0,
