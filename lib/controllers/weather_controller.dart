@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -63,12 +63,12 @@ class WeatherController extends GetxController
 
   }
   Future<void> getWeatherByLocation() async {
-    print("Running function");
+    //print("Running function");
     final location = await LocationService().getCurrentLocation();
 
     var lat = location.latitude;
     var lon = location.longitude;
-    print("Latituda is "+lat.toString());
+    //print("Latituda is "+lat.toString());
      //fLocation=getCityFromCoordinates(lat,lon);
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
     if(placemarks.isNotEmpty){
@@ -96,7 +96,7 @@ class WeatherController extends GetxController
     var response = await get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      print(data);
+      //print(data);
       weatherDaysModel.value = WeatherDaysModel.fromJson(data,fLocation.value);
       saveWeatherData(weatherDaysModel.value);
     } else {
