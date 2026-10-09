@@ -7,7 +7,7 @@ import 'screens/home.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
   Hive.registerAdapter(WeatherDaysModelAdapter());
   Hive.registerAdapter(ListHourAdapter());

@@ -30,7 +30,7 @@ class WeatherController extends GetxController
       cityName: ""
   ).obs;
   var box = Hive.box<WeatherDaysModel>('WeatherBox');
-  final String apiKey = dotenv.env['API_KEY']!;
+  final String apiKey = "YJSBHLD6KPJQAT4ULZWZGHJQB";//dotenv.env['API_KEY']!;
   void saveWeatherData(WeatherDaysModel weatherData) async {
     box.clear();
     try{await box.put('weatherData', weatherData);
@@ -45,6 +45,8 @@ class WeatherController extends GetxController
     // TODO: implement onInit
     super.onInit();
     getWeatherByLocation();
+    fetchData("faisalabad");
+
 
   }
   void loadWeatherData() {
@@ -61,10 +63,12 @@ class WeatherController extends GetxController
 
   }
   Future<void> getWeatherByLocation() async {
-
+    print("Running function");
     final location = await LocationService().getCurrentLocation();
+
     var lat = location.latitude;
     var lon = location.longitude;
+    print("Latituda is "+lat.toString());
      //fLocation=getCityFromCoordinates(lat,lon);
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
     if(placemarks.isNotEmpty){
@@ -72,9 +76,13 @@ class WeatherController extends GetxController
       fLocation.value=placemarks[0].locality??"Multan";
       //weatherDaysModel.value.cityName =fLocation.value;
       //print("Location is "+fLocation.toString());
-      fetchData(fLocation.value);
+     // fetchData(fLocation.value);
 
     }
+    // else {
+    //   fLocation.value="Faisalabad";
+    //   fetchData(fLocation.value);
+    // }
 
   }
 
@@ -84,11 +92,11 @@ class WeatherController extends GetxController
    // print("Location is"+location);
 
     var url = Uri.parse(
-        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/$location?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=$apiKey&contentType=json");
+        "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/faisalabad?unitGroup=metric&include=days%2Chours%2Calerts%2Ccurrent&key=$apiKey&contentType=json");
     var response = await get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      //print(data);
+      print(data);
       weatherDaysModel.value = WeatherDaysModel.fromJson(data,fLocation.value);
       saveWeatherData(weatherDaysModel.value);
     } else {

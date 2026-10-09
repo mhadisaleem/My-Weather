@@ -298,21 +298,21 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 10),
                   SunSection(),//sunRiseHour: 7,sunRiseMinute: 30,
                   kDivider,
-          //         Padding(
-          //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          //           child: Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Obx(()=>Text(
-          //                hourDateTimeFormat(weatherController.weatherDaysModel.value.sunRise),
-          //               )),
-          // Obx(()=>Text(
-          //                 hourDateTimeFormat(weatherController.weatherDaysModel.value.sunSet),
-          //
-          //               )),
-          //             ],
-          //           ),
-          //         ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(()=>Text(
+                         hourDateTimeFormat(weatherController.weatherDaysModel.value.sunRise),
+                        )),
+          Obx(()=>Text(
+                          hourDateTimeFormat(weatherController.weatherDaysModel.value.sunSet),
+
+                        )),
+                      ],
+                    ),
+                  ),
 
                   const SizedBox(
                     height: 20,
